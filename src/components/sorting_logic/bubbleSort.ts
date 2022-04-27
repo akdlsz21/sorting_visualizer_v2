@@ -1,7 +1,4 @@
-const bubbleSort = (
-	visualArray: number[],
-	setVisualArray: React.Dispatch<React.SetStateAction<number[]>>
-) => {
+const bubbleSort = (visualArray: number[]) => {
 	const array = [...visualArray];
 	const stateQueue = [];
 
@@ -18,16 +15,16 @@ const bubbleSort = (
 		}
 	}
 
-	let timer = 50;
-	stateQueue.forEach((state, idx) => {
-		setTimeout(() => {
-			setVisualArray(state);
-			// console.log(idx);
-		}, timer);
-		timer += 50;
-	});
+	// let timer = 50;
+	// stateQueue.forEach((state, idx) => {
+	// 	setTimeout(() => {
+	// 		setVisualArray(state);
+	// 		// console.log(idx);
+	// 	}, timer);
+	// 	timer += 50;
+	// });
 
-	stateQueue.length = 0;
+	return stateQueue;
 };
 
 export default bubbleSort;

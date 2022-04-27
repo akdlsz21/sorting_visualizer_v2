@@ -1,19 +1,40 @@
 import React from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
-import { reset } from '../features/visualArray/visualArraySlice';
+import {
+	bubbleSortReducer,
+	reset,
+} from '../features/visualArray/visualArraySlice';
+import { RootState } from '../store';
 
 const ToolBar = () => {
-	// Reset array Logic
+	// useDispatch for dispatching reducer functions??
 	const dispatch = useDispatch();
-	const handleClick = () => {
-		console.log('handleClick');
-		dispatch(reset());
-	};
+
+	// grabbing the state, later will be dispatched
+	const visualArrayState = useSelector(
+		(state: RootState) => state.visualArray
+	);
+
+	// ResetArray dispatch
+	const handleResetArray = () => dispatch(reset());
+	// BubbleSort Dispatch
+	const handleBubbleSort = () => dispatch(bubbleSortReducer());
 
 	return (
 		<StyledToolBar>
-			<StyledButton onClick={() => handleClick()}>Reset Array</StyledButton>
+			<StyledButton onClick={() => handleResetArray()}>
+				Reset Array
+			</StyledButton>
+			<StyledButton onClick={() => handleBubbleSort()}>
+				Bubble Sort
+			</StyledButton>
+			{/* <StyledButton onClick={() => handleMergeSort()}>
+				Merge Sort
+			</StyledButton>
+			<StyledButton onClick={() => handleQuickSort()}>
+				Quick Sort
+			</StyledButton> */}
 		</StyledToolBar>
 	);
 };
