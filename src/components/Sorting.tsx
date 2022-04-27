@@ -51,7 +51,7 @@ const ArrayContainer = styled.div`
 	display: flex;
 	flex-direction: row;
 	justify-content: space-between;
-	align-items: baseline;
+	align-items: flex-end;
 `;
 
 const ArrayBar = styled.div`

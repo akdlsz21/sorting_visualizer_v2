@@ -13,7 +13,7 @@ const ToolBar = () => {
 
 	return (
 		<StyledToolBar>
-			<button onClick={() => handleClick()}>Reset Array</button>
+			<StyledButton onClick={() => handleClick()}>Reset Array</StyledButton>
 		</StyledToolBar>
 	);
 };
@@ -22,6 +22,16 @@ const StyledToolBar = styled.div`
 	width: 100%;
 	height: 80px;
 	background-color: grey;
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	justify-content: center;
+`;
+
+const StyledButton = styled.button`
+	width: 150px;
+	height: 30px;
+	border-radius: 2px;
 `;
 
 export default ToolBar;
