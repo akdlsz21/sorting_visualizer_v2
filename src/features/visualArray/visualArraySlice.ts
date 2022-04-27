@@ -1,45 +1,44 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
 import resetArray from '../../components/sorting_logic/resetArray';
 import bubbleSort from '../../components/sorting_logic/bubbleSort';
 
 export type visualArray = number[];
 
+// @@INIT
 const initialState: visualArray = resetArray(100);
+
+// Async thunk for setTimeout;
 
 export const visualArraySlice = createSlice({
 	name: 'visualArray',
 	initialState,
 	reducers: {
-		reset: () => {
-			console.log('visualArraySlice Reset');
-			const currentState = resetArray(100);
-			return currentState;
+		setVisualArrayReducer: (state, action: PayloadAction<number[]>) => {
+			return action.payload;
 		},
-		bubbleSortReducer: (state) => {
-			// Cant manage to update visualSorting state.
-			console.log(`BubbleSortReducer clicked\nstate: ${state}`);
-			let stateQueue = bubbleSort(state);
+		initialArrayReducer: () => {
+			const initialVisualArray = resetArray(100);
+			return initialVisualArray;
+		},
+		reset: () => {
+			const resettedVisualArray = resetArray(100);
+			return resettedVisualArray;
+		},
+		bubbleSortReducer: (state, action: PayloadAction<number[]>) => {
+			let stateQueue = bubbleSort(action.payload);
 			state = stateQueue[stateQueue.length - 1];
-			let timer = 50;
-			stateQueue.forEach((arr) => {
-				setTimeout(() => {
-					console.log('yes');
-					state = [...arr];
-					return state;
-				}, timer);
-				timer += 50;
-			});
-
-			console.log(`new state: ${state}`);
+			let timer = 5;
 			return state;
 		},
-		// incrementByAmount: (state, action: PayloadAction<number>) => {
-		// 	state.value += action.payload;
-		// },
 	},
 });
 
 // Action creators are generated for each case reducer function
-export const { reset, bubbleSortReducer } = visualArraySlice.actions;
+export const {
+	reset,
+	bubbleSortReducer,
+	initialArrayReducer,
+	setVisualArrayReducer,
+} = visualArraySlice.actions;
 
 export default visualArraySlice.reducer;

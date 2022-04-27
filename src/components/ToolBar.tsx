@@ -4,8 +4,10 @@ import styled from 'styled-components';
 import {
 	bubbleSortReducer,
 	reset,
+	setVisualArrayReducer,
 } from '../features/visualArray/visualArraySlice';
 import { RootState } from '../store';
+import bubbleSort from './sorting_logic/bubbleSort';
 
 const ToolBar = () => {
 	// useDispatch for dispatching reducer functions??
@@ -19,7 +21,19 @@ const ToolBar = () => {
 	// ResetArray dispatch
 	const handleResetArray = () => dispatch(reset());
 	// BubbleSort Dispatch
-	const handleBubbleSort = () => dispatch(bubbleSortReducer());
+	const handleBubbleSort = () => {
+		// bubbleSort will return a 2d array,
+		// with each array, we call the setVisualArrayReducer to set
+		// each state, which will be updated at Sorting.tsx useSelector
+		const stateQueue = bubbleSort(visualArrayState);
+		stateQueue.forEach((state) => {
+			let timer = 300;
+			setTimeout(function () {
+				dispatch(setVisualArrayReducer(state));
+			}, timer);
+			timer += 300;
+		});
+	};
 
 	return (
 		<StyledToolBar>

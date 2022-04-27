@@ -3,28 +3,33 @@ import resetArray from './sorting_logic/resetArray';
 import styled from 'styled-components';
 import { useSelector } from 'react-redux';
 import { RootState } from '../store';
+import { initialArrayReducer } from '../features/visualArray/visualArraySlice';
+import { useDispatch } from 'react-redux';
 
 const Sorting = () => {
 	const [initialArray, setInitialArray] = useState([1]);
+	const dispatch = useDispatch();
 
 	useEffect(() => {
-		setInitialArray(resetArray(100));
+		dispatch(initialArrayReducer());
 	}, []);
+
+	// After the useEffect, initialArrayReducer returns an array.
+	// visual Array should live at global, not local??
 
 	// for ToolBar handleClick for resetting visual Array.
 	// useSelector gets fired everytime resetArray is clicked,
 	// returning the new state for the visualArray.
-	const resettedVisualArray = useSelector(
+	const returnedArrayFromReducers = useSelector(
 		(state: RootState) => state.visualArray
 	);
-	useEffect(() => {
-		setInitialArray(resettedVisualArray);
-	}, [resettedVisualArray]);
+
+	// useEffect(() => {}, [returnedArrayFromReducers]);
 
 	return (
 		<StyledContainer>
 			<ArrayContainer>
-				{initialArray.map((val, idx) => {
+				{returnedArrayFromReducers.map((val, idx) => {
 					return <ArrayBar key={idx} style={{ height: val }}></ArrayBar>;
 				})}
 			</ArrayContainer>
