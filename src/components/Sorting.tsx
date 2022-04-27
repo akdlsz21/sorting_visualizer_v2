@@ -12,6 +12,8 @@ const Sorting = () => {
 	}, []);
 
 	// for ToolBar handleClick for resetting visual Array.
+	// useSelector gets fired everytime resetArray is clicked,
+	// returning the new state for the visualArray.
 	const resettedVisualArray = useSelector(
 		(state: RootState) => state.visualArray
 	);
