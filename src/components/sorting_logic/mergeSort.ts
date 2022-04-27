@@ -43,7 +43,6 @@ function merge(
 of the sub-array of arr to be sorted */
 function mergeSort_(
 	arr: number[] = [],
-	setVisualArray: React.Dispatch<React.SetStateAction<number[]>>,
 	l: number = 0,
 	r: number = arr.length - 1,
 	stateQueue: number[][]
@@ -54,8 +53,8 @@ function mergeSort_(
 		let m = l + Math.floor((r - l) / 2);
 
 		// Sort first and second halves
-		mergeSort_(arr, setVisualArray, l, m, stateQueue);
-		mergeSort_(arr, setVisualArray, m + 1, r, stateQueue);
+		mergeSort_(arr, l, m, stateQueue);
+		mergeSort_(arr, m + 1, r, stateQueue);
 
 		merge(arr, l, m, r, stateQueue);
 	}
@@ -63,21 +62,13 @@ function mergeSort_(
 
 function mergeSort(
 	arr: number[] = [],
-	setVisualArray: React.Dispatch<React.SetStateAction<number[]>>,
 	l: number = 0,
 	r: number = arr.length - 1
 ) {
 	const stateQueue: number[][] = [];
-	mergeSort_(arr, setVisualArray, l, r, stateQueue);
-	let timeOut = 3;
-	stateQueue.forEach((state, index) => {
-		setTimeout(() => {
-			console.log(`IDX: ${index}`);
-			setVisualArray([...state]);
-		}, timeOut);
-		timeOut += 3;
-	});
-	stateQueue.length = 0;
+	mergeSort_(arr, l, r, stateQueue);
+
+	return stateQueue;
 }
 
 export default mergeSort;

@@ -8,6 +8,7 @@ import {
 } from '../features/visualArray/visualArraySlice';
 import { RootState } from '../store';
 import bubbleSort from './sorting_logic/bubbleSort';
+import mergeSort from './sorting_logic/mergeSort';
 
 const ToolBar = () => {
 	// useDispatch for dispatching reducer functions??
@@ -27,11 +28,31 @@ const ToolBar = () => {
 		// each state, which will be updated at Sorting.tsx useSelector
 		const stateQueue = bubbleSort(visualArrayState);
 		stateQueue.forEach((state) => {
-			let timer = 300;
+			let timer = 30;
 			setTimeout(function () {
 				dispatch(setVisualArrayReducer(state));
 			}, timer);
 			timer += 300;
+		});
+	};
+
+	// *Directly manipulating the address of the store.visualArray will return an error.
+	// since redux state is not able to be mutable, we have to copy the address's array and
+	// send it to mergeSort
+	const handleMergeSort = () => {
+		// * mergeSort's argument array will be mutated, since array is the pointer to the store.visualArray.
+		// * copy the array first, so address will be different in the function
+		const stateQueue = mergeSort(
+			[...visualArrayState],
+			0,
+			visualArrayState.length - 1
+		);
+		stateQueue.forEach((state) => {
+			let timer = 30;
+			setTimeout(function () {
+				dispatch(setVisualArrayReducer(state));
+			}, timer);
+			timer += 30;
 		});
 	};
 
@@ -43,10 +64,10 @@ const ToolBar = () => {
 			<StyledButton onClick={() => handleBubbleSort()}>
 				Bubble Sort
 			</StyledButton>
-			{/* <StyledButton onClick={() => handleMergeSort()}>
+			<StyledButton onClick={() => handleMergeSort()}>
 				Merge Sort
 			</StyledButton>
-			<StyledButton onClick={() => handleQuickSort()}>
+			{/* <StyledButton onClick={() => handleQuickSort()}>
 				Quick Sort
 			</StyledButton> */}
 		</StyledToolBar>
