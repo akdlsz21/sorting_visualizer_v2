@@ -15,15 +15,6 @@ const bubbleSort = (visualArray: number[]) => {
 		}
 	}
 
-	// let timer = 50;
-	// stateQueue.forEach((state, idx) => {
-	// 	setTimeout(() => {
-	// 		setVisualArray(state);
-	// 		// console.log(idx);
-	// 	}, timer);
-	// 	timer += 50;
-	// });
-
 	return stateQueue;
 };
 

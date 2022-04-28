@@ -24,21 +24,11 @@ export const visualArraySlice = createSlice({
 			const resettedVisualArray = resetArray(100);
 			return resettedVisualArray;
 		},
-		bubbleSortReducer: (state, action: PayloadAction<number[]>) => {
-			let stateQueue = bubbleSort(action.payload);
-			state = stateQueue[stateQueue.length - 1];
-			let timer = 5;
-			return state;
-		},
 	},
 });
 
 // Action creators are generated for each case reducer function
-export const {
-	reset,
-	bubbleSortReducer,
-	initialArrayReducer,
-	setVisualArrayReducer,
-} = visualArraySlice.actions;
+export const { reset, initialArrayReducer, setVisualArrayReducer } =
+	visualArraySlice.actions;
 
 export default visualArraySlice.reducer;

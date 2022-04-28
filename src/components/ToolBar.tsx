@@ -1,23 +1,21 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
 import {
-	bubbleSortReducer,
 	reset,
 	setVisualArrayReducer,
 } from '../features/visualArray/visualArraySlice';
 import { RootState } from '../store';
 import bubbleSort from './sorting_logic/bubbleSort';
 import mergeSort from './sorting_logic/mergeSort';
+import quickSort from './sorting_logic/quickSort';
 
 const ToolBar = () => {
 	// useDispatch for dispatching reducer functions??
 	const dispatch = useDispatch();
 
 	// grabbing the state, later will be dispatched
-	const visualArrayState = useSelector(
-		(state: RootState) => state.visualArray
-	);
+	const visualArray = useSelector((state: RootState) => state.visualArray);
 
 	// ResetArray dispatch
 	const handleResetArray = () => dispatch(reset());
@@ -26,13 +24,13 @@ const ToolBar = () => {
 		// bubbleSort will return a 2d array,
 		// with each array, we call the setVisualArrayReducer to set
 		// each state, which will be updated at Sorting.tsx useSelector
-		const stateQueue = bubbleSort(visualArrayState);
-		let timer = 50;
+		const stateQueue = bubbleSort(visualArray);
+		let timer = 10;
 		stateQueue.forEach((state) => {
 			setTimeout(function () {
 				dispatch(setVisualArrayReducer(state));
 			}, timer);
-			timer += 50;
+			timer += 10;
 		});
 	};
 
@@ -42,18 +40,27 @@ const ToolBar = () => {
 	const handleMergeSort = () => {
 		// * mergeSort's argument array will be mutated, since array is the pointer to the store.visualArray.
 		// * copy the array first, so address will be different in the function
-		const stateQueue = mergeSort(
-			[...visualArrayState],
-			0,
-			visualArrayState.length - 1
-		);
+		const stateQueue = mergeSort([...visualArray], 0, visualArray.length - 1);
 		// 도대체 왜 timer를 forEach 코드영역에 넣어놨냐..
-		let timer = 300;
+		let timer = 10;
 		stateQueue.forEach((state) => {
 			setTimeout(function () {
 				dispatch(setVisualArrayReducer(state));
 			}, timer);
-			timer += 300;
+			timer += 10;
+		});
+	};
+
+	const handleQuickSort = () => {
+		// quickSort has the address of the global state visual Array.
+		// copy the array of the global array address and pass it as an argument instead
+		const stateQueue = quickSort([...visualArray], 0, visualArray.length - 1);
+		let timer = 60;
+		stateQueue.forEach((arr) => {
+			setTimeout(() => {
+				dispatch(setVisualArrayReducer(arr));
+			}, timer);
+			timer += 60;
 		});
 	};
 
@@ -68,12 +75,16 @@ const ToolBar = () => {
 			<StyledButton onClick={() => handleMergeSort()}>
 				Merge Sort
 			</StyledButton>
-			{/* <StyledButton onClick={() => handleQuickSort()}>
+			<StyledButton onClick={() => handleQuickSort()}>
 				Quick Sort
-			</StyledButton> */}
+			</StyledButton>
 		</StyledToolBar>
 	);
 };
+
+const StyledSliderContainer = styled.div`
+	margin-right: 30px;
+`;
 
 const StyledToolBar = styled.div`
 	width: 100%;
