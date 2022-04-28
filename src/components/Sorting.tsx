@@ -7,7 +7,7 @@ import { initialArrayReducer } from '../features/visualArray/visualArraySlice';
 import { useDispatch } from 'react-redux';
 
 const Sorting = () => {
-	const [initialArray, setInitialArray] = useState([1]);
+	const [initialArray, setInitialArray] = useState([]);
 	const dispatch = useDispatch();
 
 	useEffect(() => {
@@ -30,7 +30,15 @@ const Sorting = () => {
 		<StyledContainer>
 			<ArrayContainer>
 				{returnedArrayFromReducers.map((val, idx) => {
-					return <ArrayBar key={idx} style={{ height: val }}></ArrayBar>;
+					return (
+						<ArrayBar
+							key={idx}
+							style={{
+								height: val.value,
+								backgroundColor: val.focused ? `black` : `white`,
+							}}
+						></ArrayBar>
+					);
 				})}
 			</ArrayContainer>
 		</StyledContainer>
@@ -60,7 +68,7 @@ const ArrayContainer = styled.div`
 `;
 
 const ArrayBar = styled.div`
-	background-color: pink;
+	/* background-color: pink; */
 	width: 20px;
 	border: 1px solid purple;
 `;

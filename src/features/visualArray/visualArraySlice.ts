@@ -2,10 +2,15 @@ import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
 import resetArray from '../../components/sorting_logic/resetArray';
 import bubbleSort from '../../components/sorting_logic/bubbleSort';
 
-export type visualArray = number[];
+export type visualBarT = {
+	value: number;
+	focused: boolean;
+};
+
+export type visualArrayT = visualBarT[];
 
 // @@INIT
-const initialState: visualArray = resetArray(100);
+const initialState: visualArrayT = resetArray(100);
 
 // Async thunk for setTimeout;
 
@@ -13,7 +18,7 @@ export const visualArraySlice = createSlice({
 	name: 'visualArray',
 	initialState,
 	reducers: {
-		setVisualArrayReducer: (state, action: PayloadAction<number[]>) => {
+		setVisualArrayReducer: (state, action: PayloadAction<visualArrayT>) => {
 			return action.payload;
 		},
 		initialArrayReducer: () => {
