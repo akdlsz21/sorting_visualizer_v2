@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
 import {
+	renderVisualArrayReducer,
 	reset,
 	setVisualArrayReducer,
 } from '../features/visualArray/visualArraySlice';
@@ -22,26 +23,21 @@ const ToolBar = () => {
 	// BubbleSort Dispatch
 	const handleBubbleSort = () => {
 		// bubbleSort will return a 2d array,
-		// with each array, we call the setVisualArrayReducer to set
-		// each state, which will be updated at Sorting.tsx useSelector
+
 		const stateQueue = bubbleSort(visualArray);
-		let timer = 10;
+		let timer = 300;
 		stateQueue.forEach((state) => {
 			setTimeout(function () {
-				dispatch(setVisualArrayReducer(state));
+				dispatch(renderVisualArrayReducer(state));
 			}, timer);
-			timer += 10;
+			timer += 300;
 		});
 	};
 
 	// *Directly manipulating the address of the store.visualArray will return an error.
-	// since redux state is not able to be mutable, we have to copy the address's array and
-	// send it to mergeSort
 	const handleMergeSort = () => {
 		// * mergeSort's argument array will be mutated, since array is the pointer to the store.visualArray.
-		// * copy the array first, so address will be different in the function
 		const stateQueue = mergeSort([...visualArray], 0, visualArray.length - 1);
-		// 도대체 왜 timer를 forEach 코드영역에 넣어놨냐..
 		let timer = 10;
 		stateQueue.forEach((state) => {
 			setTimeout(function () {

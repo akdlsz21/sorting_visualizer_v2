@@ -5,6 +5,7 @@ import { useSelector } from 'react-redux';
 import { RootState } from '../store';
 import { initialArrayReducer } from '../features/visualArray/visualArraySlice';
 import { useDispatch } from 'react-redux';
+import ArrayBar from './ArrayBar';
 
 const Sorting = () => {
 	const [initialArray, setInitialArray] = useState([]);
@@ -33,9 +34,9 @@ const Sorting = () => {
 					return (
 						<ArrayBar
 							key={idx}
-							style={{
+							styleBar={{
 								height: val.value,
-								backgroundColor: val.focused ? `black` : `white`,
+								backgroundColor: val.state.color,
 							}}
 						></ArrayBar>
 					);
@@ -57,7 +58,7 @@ const StyledContainer = styled.div`
 `;
 
 const ArrayContainer = styled.div`
-	width: 80%;
+	width: 50%;
 	height: 500px;
 	background-color: rgba(237, 200, 150, 0.2);
 	border-bottom: 1px solid grey;
@@ -67,8 +68,8 @@ const ArrayContainer = styled.div`
 	align-items: flex-end;
 `;
 
-const ArrayBar = styled.div`
-	/* background-color: pink; */
-	width: 20px;
-	border: 1px solid purple;
-`;
+// const ArrayBar = styled.div`
+// 	/* background-color: pink; */
+// 	width: 20px;
+// 	border: 1px solid purple;
+// `;
