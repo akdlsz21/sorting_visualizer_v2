@@ -27,12 +27,12 @@ const ToolBar = () => {
 		// with each array, we call the setVisualArrayReducer to set
 		// each state, which will be updated at Sorting.tsx useSelector
 		const stateQueue = bubbleSort(visualArrayState);
+		let timer = 50;
 		stateQueue.forEach((state) => {
-			let timer = 30;
 			setTimeout(function () {
 				dispatch(setVisualArrayReducer(state));
 			}, timer);
-			timer += 300;
+			timer += 50;
 		});
 	};
 
@@ -47,12 +47,13 @@ const ToolBar = () => {
 			0,
 			visualArrayState.length - 1
 		);
+		// 도대체 왜 timer를 forEach 코드영역에 넣어놨냐..
+		let timer = 300;
 		stateQueue.forEach((state) => {
-			let timer = 30;
 			setTimeout(function () {
 				dispatch(setVisualArrayReducer(state));
 			}, timer);
-			timer += 30;
+			timer += 300;
 		});
 	};
 
