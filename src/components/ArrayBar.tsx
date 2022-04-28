@@ -7,7 +7,9 @@ const ArrayBar = (props: any) => {
 
 const StyledBar = styled.div`
 	/* background-color: pink; */
-	width: 20px;
+	min-width: 15px;
+	width: 80px;
+	max-width: 90px;
 	border: 1px solid purple;
 `;
 

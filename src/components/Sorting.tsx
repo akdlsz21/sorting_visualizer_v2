@@ -58,7 +58,7 @@ const StyledContainer = styled.div`
 `;
 
 const ArrayContainer = styled.div`
-	width: 50%;
+	width: 70%;
 	height: 500px;
 	background-color: rgba(237, 200, 150, 0.2);
 	border-bottom: 1px solid grey;

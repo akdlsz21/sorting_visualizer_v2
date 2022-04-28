@@ -25,12 +25,12 @@ const ToolBar = () => {
 		// bubbleSort will return a 2d array,
 
 		const stateQueue = bubbleSort(visualArray);
-		let timer = 300;
+		let timer = 100;
 		stateQueue.forEach((state) => {
 			setTimeout(function () {
 				dispatch(renderVisualArrayReducer(state));
 			}, timer);
-			timer += 300;
+			timer += 100;
 		});
 	};
 

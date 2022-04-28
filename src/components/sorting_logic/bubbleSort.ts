@@ -29,6 +29,19 @@ const bubbleSort = (visualArray: visualArrayT) => {
 			// stateQueue.push([...array]);
 
 			stateQueue.push({ selectedIdx: j });
+			if (array[j].value > array[j + 1].value) {
+				stateQueue.push({ compareIdx: j + 1 });
+				let temp = array[j];
+				array[j] = array[j + 1];
+				array[j + 1] = temp;
+				stateQueue.push({ swapWithOneHigherIdx: j });
+				stateQueue.push({ selectedIdx: j + 1 });
+				stateQueue.push({ swapIdx: j });
+			}
+			stateQueue.push({ defaultIdx: j });
+			if (j === array.length - i - 2) {
+				stateQueue.push({ selectedIdx: j + 1 });
+			}
 		}
 	}
 	// stateQueue[stateQueue.length - 1][0] = {

@@ -13,6 +13,8 @@ export type sortActionT = {
 	selectedIdx?: number;
 	compareIdx?: number;
 	swapIdx?: number;
+	defaultIdx?: number;
+	swapWithOneHigherIdx?: number;
 };
 export const WHITE = 'white';
 const selected = { color: 'grey' };
@@ -21,7 +23,7 @@ const compare = { color: 'purple' };
 const defaultState = { color: WHITE };
 
 // @@INIT
-const initialState: visualArrayT = resetArray(35);
+const initialState: visualArrayT = resetArray(20);
 
 // Async thunk for setTimeout;
 
@@ -30,21 +32,28 @@ export const visualArraySlice = createSlice({
 	initialState,
 	reducers: {
 		renderVisualArrayReducer: (state, action: PayloadAction<sortActionT>) => {
-			state = state.map((bar, idx) => {
+			return state.map((bar, idx) => {
 				if (idx === action.payload.selectedIdx) {
 					bar = { ...bar, state: selected };
+					return bar;
+				} else if (idx === action.payload.defaultIdx) {
+					bar = { ...bar, state: defaultState };
+					return bar;
+				} else if (idx === action.payload.compareIdx) {
+					bar = { ...bar, state: compare };
+					return bar;
+				} else if (idx === action.payload.swapIdx) {
+					bar = { ...bar, state: swapped };
 					return bar;
 				}
 				return bar;
 			});
-
-			return state;
 		},
 		setVisualArrayReducer: (state, action: PayloadAction<visualArrayT>) => {
 			return action.payload;
 		},
 		initialArrayReducer: () => {
-			const initialVisualArray = resetArray(35);
+			const initialVisualArray = resetArray(20);
 			return initialVisualArray;
 		},
 		reset: () => {
