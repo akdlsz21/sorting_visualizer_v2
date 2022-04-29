@@ -17,9 +17,9 @@ export type sortActionT = {
 	swapWithOneHigherIdx?: number;
 };
 export const WHITE = 'white';
-const selected = { color: 'grey' };
-const swapped = { color: 'pink' };
-const compare = { color: 'purple' };
+const selected = { color: 'green' };
+const swapped = { color: 'crimson' };
+const compare = { color: 'blue' };
 const defaultState = { color: WHITE };
 
 // @@INIT
@@ -31,23 +31,34 @@ export const visualArraySlice = createSlice({
 	name: 'visualArray',
 	initialState,
 	reducers: {
-		renderVisualArrayReducer: (state, action: PayloadAction<sortActionT>) => {
-			return state.map((bar, idx) => {
-				if (idx === action.payload.selectedIdx) {
-					bar = { ...bar, state: selected };
-					return bar;
-				} else if (idx === action.payload.defaultIdx) {
-					bar = { ...bar, state: defaultState };
-					return bar;
-				} else if (idx === action.payload.compareIdx) {
-					bar = { ...bar, state: compare };
-					return bar;
-				} else if (idx === action.payload.swapIdx) {
-					bar = { ...bar, state: swapped };
-					return bar;
-				}
-				return bar;
-			});
+		bubCompareReducer: (state, action: PayloadAction<sortActionT>) => {
+			const { selectedIdx, compareIdx, defaultIdx, swapIdx } =
+				action.payload;
+
+			if (!isNaN(selectedIdx!)) {
+				state[selectedIdx!].state = selected;
+			}
+
+			if (!isNaN(compareIdx!)) {
+				state[compareIdx!].state = compare;
+			}
+
+			if (!isNaN(swapIdx!)) {
+				let temp = { ...state[selectedIdx!] };
+				state[selectedIdx!] = state[swapIdx!];
+				state[selectedIdx!].state = swapped;
+				state[swapIdx!] = temp;
+			}
+
+			if (defaultIdx! >= 0) {
+				state[defaultIdx!].state = defaultState;
+			}
+		},
+		bubCompareAndSelectReducer: (
+			state,
+			action: PayloadAction<sortActionT>
+		) => {
+			state[action.payload.compareIdx!].state = compare;
 		},
 		setVisualArrayReducer: (state, action: PayloadAction<visualArrayT>) => {
 			return action.payload;
@@ -68,7 +79,8 @@ export const {
 	reset,
 	initialArrayReducer,
 	setVisualArrayReducer,
-	renderVisualArrayReducer,
+	bubCompareReducer,
+	bubCompareAndSelectReducer,
 } = visualArraySlice.actions;
 
 export default visualArraySlice.reducer;

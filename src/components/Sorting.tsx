@@ -66,6 +66,8 @@ const ArrayContainer = styled.div`
 	flex-direction: row;
 	justify-content: space-between;
 	align-items: flex-end;
+	/* animation: alternate; */
+	transition: 250ms ease-in-out;
 `;
 
 // const ArrayBar = styled.div`

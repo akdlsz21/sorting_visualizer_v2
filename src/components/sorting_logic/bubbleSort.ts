@@ -8,47 +8,32 @@ const bubbleSort = (visualArray: visualArrayT) => {
 	const stateQueue: sortActionT[] = [];
 
 	for (let i = 0; i < array.length; i++) {
-		for (let j = 0; j < array.length - i - 1; j++) {
-			// array[j] = { ...array[j], state: selected };
-			// stateQueue.push([...array]);
+		for (let j = 0; j < array.length - (i + 1); j++) {
+			let operations: sortActionT = { selectedIdx: j };
+			stateQueue.push(operations);
 
-			// if (array[j].value > array[j + 1].value) {
-			// 	array[j + 1] = { ...array[j + 1], state: compare };
-			// 	stateQueue.push([...array]);
-			// 	let temp = array[j];
-			// 	array[j] = array[j + 1];
-			// 	array[j + 1] = temp;
-			// 	stateQueue.push([...array]);
-			// 	array[j] = { ...array[j], state: swapped };
-			// 	stateQueue.push([...array]);
-			// }
-			// array[j] = { ...array[j], state: defaultState };
-			// if (j === array.length - i - 2) {
-			// 	array[j + 1] = { ...array[j + 1], state: selected };
-			// }
-			// stateQueue.push([...array]);
-
-			stateQueue.push({ selectedIdx: j });
 			if (array[j].value > array[j + 1].value) {
-				stateQueue.push({ compareIdx: j + 1 });
+				operations = { selectedIdx: j, compareIdx: j + 1 };
+				stateQueue.push(operations);
+				operations = { selectedIdx: j, swapIdx: j + 1 };
+				stateQueue.push(operations);
+
 				let temp = array[j];
 				array[j] = array[j + 1];
 				array[j + 1] = temp;
-				stateQueue.push({ swapWithOneHigherIdx: j });
-				stateQueue.push({ selectedIdx: j + 1 });
-				stateQueue.push({ swapIdx: j });
+				// operations = { defaultIdx: j };
+				// stateQueue.push(operations);
 			}
-			stateQueue.push({ defaultIdx: j });
-			if (j === array.length - i - 2) {
-				stateQueue.push({ selectedIdx: j + 1 });
+			if (j === array.length - (i + 2)) {
+				operations = { selectedIdx: j + 1, defaultIdx: j };
+				stateQueue.push(operations);
+			} else {
+				operations = { defaultIdx: j };
+				stateQueue.push(operations);
 			}
 		}
 	}
-	// stateQueue[stateQueue.length - 1][0] = {
-	// 	...stateQueue[stateQueue.length - 1][0],
-	// 	state: selected,
-	// };
-
+	stateQueue.push({ selectedIdx: 0 });
 	return stateQueue;
 };
 

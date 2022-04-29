@@ -2,7 +2,8 @@ import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
 import {
-	renderVisualArrayReducer,
+	bubCompareAndSelectReducer,
+	bubCompareReducer,
 	reset,
 	setVisualArrayReducer,
 } from '../features/visualArray/visualArraySlice';
@@ -22,16 +23,16 @@ const ToolBar = () => {
 	const handleResetArray = () => dispatch(reset());
 	// BubbleSort Dispatch
 	const handleBubbleSort = () => {
-		// bubbleSort will return a 2d array,
-
 		const stateQueue = bubbleSort(visualArray);
-		let timer = 100;
-		stateQueue.forEach((state) => {
-			setTimeout(function () {
-				dispatch(renderVisualArrayReducer(state));
+		console.log(stateQueue.length);
+		let timer = 300;
+		for (let i = 0; i < stateQueue.length; i++) {
+			const { selectedIdx, compareIdx } = stateQueue[i];
+			setTimeout(() => {
+				dispatch(bubCompareReducer(stateQueue[i]));
 			}, timer);
-			timer += 100;
-		});
+			timer += 300;
+		}
 	};
 
 	// *Directly manipulating the address of the store.visualArray will return an error.

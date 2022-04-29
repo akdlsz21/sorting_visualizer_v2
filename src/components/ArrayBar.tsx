@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 
 const ArrayBar = (props: any) => {
-	return <StyledBar style={props.styleBar}>{props.styleBar.height}</StyledBar>;
+	return <StyledBar style={props.styleBar}></StyledBar>;
 };
 
 const StyledBar = styled.div`
@@ -11,6 +11,8 @@ const StyledBar = styled.div`
 	width: 80px;
 	max-width: 90px;
 	border: 1px solid purple;
+	/* animation: alternate; */
+	transition: ease-in-out;
 `;
 
 export default ArrayBar;
