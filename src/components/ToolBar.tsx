@@ -25,27 +25,26 @@ const ToolBar = () => {
 	const handleBubbleSort = () => {
 		const stateQueue = bubbleSort(visualArray);
 		console.log(stateQueue.length);
-		let timer = 300;
+		let timer = 100;
 		for (let i = 0; i < stateQueue.length; i++) {
-			const { selectedIdx, compareIdx } = stateQueue[i];
 			setTimeout(() => {
 				dispatch(bubCompareReducer(stateQueue[i]));
 			}, timer);
-			timer += 300;
+			timer += 100;
 		}
 	};
 
 	// *Directly manipulating the address of the store.visualArray will return an error.
 	const handleMergeSort = () => {
-		// * mergeSort's argument array will be mutated, since array is the pointer to the store.visualArray.
 		const stateQueue = mergeSort([...visualArray], 0, visualArray.length - 1);
+		console.log(stateQueue.length);
 		let timer = 10;
-		stateQueue.forEach((state) => {
-			setTimeout(function () {
-				dispatch(setVisualArrayReducer(state));
+		for (let i = 0; i < stateQueue.length; i++) {
+			setTimeout(() => {
+				dispatch(bubCompareReducer(stateQueue[i]));
 			}, timer);
 			timer += 10;
-		});
+		}
 	};
 
 	const handleQuickSort = () => {

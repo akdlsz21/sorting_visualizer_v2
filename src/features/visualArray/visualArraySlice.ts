@@ -34,7 +34,6 @@ export const visualArraySlice = createSlice({
 		bubCompareReducer: (state, action: PayloadAction<sortActionT>) => {
 			const { selectedIdx, compareIdx, defaultIdx, swapIdx } =
 				action.payload;
-
 			if (!isNaN(selectedIdx!)) {
 				state[selectedIdx!].state = selected;
 			}

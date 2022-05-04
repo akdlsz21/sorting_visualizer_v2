@@ -12,7 +12,7 @@ const StyledBar = styled.div`
 	max-width: 90px;
 	border: 1px solid purple;
 	/* animation: alternate; */
-	transition: ease-in-out;
+	transition: 120ms ease-in-out;
 `;
 
 export default ArrayBar;

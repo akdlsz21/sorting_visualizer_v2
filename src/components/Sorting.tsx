@@ -31,6 +31,17 @@ const Sorting = () => {
 		<StyledContainer>
 			<ArrayContainer>
 				{returnedArrayFromReducers.map((val, idx) => {
+					if (val.state.color === 'blue') {
+						return (
+							<ArrayBar
+								key={idx}
+								styleBar={{
+									height: val.value,
+									backgroundColor: val.state.color,
+								}}
+							></ArrayBar>
+						);
+					}
 					return (
 						<ArrayBar
 							key={idx}
@@ -50,7 +61,7 @@ export default Sorting;
 
 const StyledContainer = styled.div`
 	width: auto;
-	height: 700px;
+	height: 800px;
 	background-color: rgba(237, 235, 230);
 	display: flex;
 	align-items: center;
@@ -66,7 +77,6 @@ const ArrayContainer = styled.div`
 	flex-direction: row;
 	justify-content: space-between;
 	align-items: flex-end;
-	/* animation: alternate; */
 	transition: 250ms ease-in-out;
 `;
 

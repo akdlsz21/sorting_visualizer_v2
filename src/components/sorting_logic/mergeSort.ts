@@ -1,14 +1,20 @@
+import {
+	sortActionT,
+	visualArrayT,
+	visualBarT,
+} from '../../features/visualArray/visualArraySlice';
+
 function merge(
-	arr: number[],
+	arr: visualArrayT,
 	start: number,
 	mid: number,
 	end: number,
-	stateQueue: number[][]
+	stateQueue: sortActionT[]
 ) {
 	let start2 = mid + 1;
 
 	// If the direct merge is already sorted
-	if (arr[mid] <= arr[start2]) {
+	if (arr[mid].value <= arr[start2].value) {
 		return;
 	}
 
@@ -16,7 +22,10 @@ function merge(
 	// of both arrays to merge
 	while (start <= mid && start2 <= end) {
 		// If element 1 is in right place
-		if (arr[start] <= arr[start2]) {
+		let operation = {};
+		if (arr[start].value <= arr[start2].value) {
+			operation = { compareIdx: start };
+			stateQueue.push(operation);
 			start++;
 		} else {
 			let value = arr[start2];
@@ -25,9 +34,12 @@ function merge(
 			// Shift all the elements between element 1
 			// element 2, right by 1.
 			while (index !== start) {
-				arr[index] = arr[index - 1];
+				let operation = {};
+
+				arr[index] = Object.create(arr[index - 1]);
+				operation = { selectedIdx: index, swapIdx: index - 1 };
 				index--;
-				stateQueue.push([...arr]);
+				stateQueue.push(operation);
 			}
 			arr[start] = value;
 
@@ -42,10 +54,10 @@ function merge(
 /* l is for left index and r is right index
 of the sub-array of arr to be sorted */
 function mergeSort_(
-	arr: number[] = [],
+	arr: visualArrayT = [],
 	l: number = 0,
 	r: number = arr.length - 1,
-	stateQueue: number[][]
+	stateQueue: sortActionT[] = []
 ) {
 	if (l < r) {
 		// Same as (l + r) / 2, but avoids overflow
@@ -61,13 +73,13 @@ function mergeSort_(
 }
 
 function mergeSort(
-	arr: number[] = [],
+	arr: visualArrayT,
 	l: number = 0,
 	r: number = arr.length - 1
 ) {
-	const stateQueue: number[][] = [];
+	const stateQueue: sortActionT[] = [];
 	mergeSort_(arr, l, r, stateQueue);
-
+	console.log(stateQueue);
 	return stateQueue;
 }
 
