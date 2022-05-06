@@ -23,9 +23,14 @@ function merge(
 	while (start <= mid && start2 <= end) {
 		// If element 1 is in right place
 		let operation = {};
+		operation = { selectedIdx: start };
+		stateQueue.push(operation);
+
 		if (arr[start].value <= arr[start2].value) {
-			operation = { compareIdx: start };
+			operation = { compareIdx: start2 };
 			stateQueue.push(operation);
+			// operation = { compareIdx: start2 };
+			// stateQueue.push(operation);
 			start++;
 		} else {
 			let value = arr[start2];
@@ -37,7 +42,7 @@ function merge(
 				let operation = {};
 
 				arr[index] = Object.create(arr[index - 1]);
-				operation = { selectedIdx: index, swapIdx: index - 1 };
+				// operation = { selectedIdx: index, swapIdx: index - 1 };
 				index--;
 				stateQueue.push(operation);
 			}
