@@ -38,12 +38,12 @@ const ToolBar = () => {
 	const handleMergeSort = () => {
 		const stateQueue = mergeSort([...visualArray], 0, visualArray.length - 1);
 		console.log(stateQueue.length);
-		let timer = 10;
+		let timer = 3000;
 		for (let i = 0; i < stateQueue.length; i++) {
 			setTimeout(() => {
 				dispatch(bubCompareReducer(stateQueue[i]));
 			}, timer);
-			timer += 10;
+			timer += 3000;
 		}
 	};
 
