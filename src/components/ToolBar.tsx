@@ -13,6 +13,7 @@ import mergeSort from './sorting_logic/mergeSort';
 import quickSort from './sorting_logic/quickSort';
 
 const ToolBar = () => {
+	const [sortSpeed, setSortSpeed] = useState<number>(10);
 	// useDispatch for dispatching reducer functions??
 	const dispatch = useDispatch();
 
@@ -25,12 +26,12 @@ const ToolBar = () => {
 	const handleBubbleSort = () => {
 		const stateQueue = bubbleSort(visualArray);
 		console.log(stateQueue.length);
-		let timer = 100;
+		let timer = sortSpeed;
 		for (let i = 0; i < stateQueue.length; i++) {
 			setTimeout(() => {
 				dispatch(bubCompareReducer(stateQueue[i]));
 			}, timer);
-			timer += 100;
+			timer += sortSpeed;
 		}
 	};
 
@@ -38,12 +39,12 @@ const ToolBar = () => {
 	const handleMergeSort = () => {
 		const stateQueue = mergeSort([...visualArray], 0, visualArray.length - 1);
 		console.log(stateQueue.length);
-		let timer = 3000;
+		let timer = sortSpeed;
 		for (let i = 0; i < stateQueue.length; i++) {
 			setTimeout(() => {
 				dispatch(bubCompareReducer(stateQueue[i]));
 			}, timer);
-			timer += 3000;
+			timer += sortSpeed;
 		}
 	};
 
@@ -51,17 +52,29 @@ const ToolBar = () => {
 		// quickSort has the address of the global state visual Array.
 		// copy the array of the global array address and pass it as an argument instead
 		const stateQueue = quickSort([...visualArray], 0, visualArray.length - 1);
-		let timer = 60;
+		let timer = sortSpeed;
 		stateQueue.forEach((arr) => {
 			setTimeout(() => {
 				dispatch(setVisualArrayReducer(arr));
 			}, timer);
-			timer += 60;
+			timer += sortSpeed;
 		});
 	};
 
+	function handleSpeedRange(e: React.ChangeEvent<HTMLInputElement>) {
+		console.log(`sort speed: ${e.target.value}`);
+		setSortSpeed(Number(e.target.value));
+	}
+
 	return (
 		<StyledToolBar>
+			<input
+				type="range"
+				min="10"
+				max="3000"
+				step="20"
+				onChange={(e) => handleSpeedRange(e)}
+			/>
 			<StyledButton onClick={() => handleResetArray()}>
 				Reset Array
 			</StyledButton>

@@ -9,7 +9,7 @@ function merge(
 	start: number,
 	mid: number,
 	end: number,
-	stateQueue: sortActionT[]
+	que: sortActionT[]
 ) {
 	let start2 = mid + 1;
 
@@ -24,11 +24,14 @@ function merge(
 		// If element 1 is in right place
 		let operation = {};
 		operation = { selectedIdx: start };
-		stateQueue.push(operation);
+		que.push(operation);
+		operation = { selectedIdx: start, compareIdx: start2 };
+		que.push(operation);
 
+		console.log(`start:${start}\nstart2:${start2}`);
 		if (arr[start].value <= arr[start2].value) {
 			operation = { compareIdx: start2 };
-			stateQueue.push(operation);
+			que.push(operation);
 			// operation = { compareIdx: start2 };
 			// stateQueue.push(operation);
 			start++;
@@ -42,9 +45,9 @@ function merge(
 				let operation = {};
 
 				arr[index] = Object.create(arr[index - 1]);
-				// operation = { selectedIdx: index, swapIdx: index - 1 };
+				operation = { selectedIdx: index, swapIdx: index - 1 };
 				index--;
-				stateQueue.push(operation);
+				que.push(operation);
 			}
 			arr[start] = value;
 
@@ -62,7 +65,7 @@ function mergeSort_(
 	arr: visualArrayT = [],
 	l: number = 0,
 	r: number = arr.length - 1,
-	stateQueue: sortActionT[] = []
+	que: sortActionT[] = []
 ) {
 	if (l < r) {
 		// Same as (l + r) / 2, but avoids overflow
@@ -70,10 +73,10 @@ function mergeSort_(
 		let m = l + Math.floor((r - l) / 2);
 
 		// Sort first and second halves
-		mergeSort_(arr, l, m, stateQueue);
-		mergeSort_(arr, m + 1, r, stateQueue);
+		mergeSort_(arr, l, m, que);
+		mergeSort_(arr, m + 1, r, que);
 
-		merge(arr, l, m, r, stateQueue);
+		merge(arr, l, m, r, que);
 	}
 }
 
