@@ -3,6 +3,7 @@ import {
 	visualArrayT,
 	visualBarT,
 } from '../../features/visualArray/visualArraySlice';
+import mergeSortHelper from './mergeSortHelper/mergeSortHelper';
 
 function merge(
 	arr: visualArrayT,
@@ -28,12 +29,13 @@ function merge(
 		operation = { selectedIdx: start, compareIdx: start2 };
 		que.push(operation);
 
-		console.log(`start:${start}\nstart2:${start2}`);
 		if (arr[start].value <= arr[start2].value) {
-			operation = { compareIdx: start2 };
+			operation = { selectedIdx: start };
 			que.push(operation);
-			// operation = { compareIdx: start2 };
-			// stateQueue.push(operation);
+			operation = { selectedIdx: start, compareIdx: start2 };
+			que.push(operation);
+			operation = { selectedIdx: start2 };
+			que.push(operation);
 			start++;
 		} else {
 			let value = arr[start2];
@@ -46,8 +48,10 @@ function merge(
 
 				arr[index] = Object.create(arr[index - 1]);
 				operation = { selectedIdx: index, swapIdx: index - 1 };
-				index--;
 				que.push(operation);
+				operation = { selectedIdx: index - 1 };
+				que.push(operation);
+				index--;
 			}
 			arr[start] = value;
 
@@ -85,10 +89,11 @@ function mergeSort(
 	l: number = 0,
 	r: number = arr.length - 1
 ) {
-	const stateQueue: sortActionT[] = [];
-	mergeSort_(arr, l, r, stateQueue);
-	console.log(stateQueue);
-	return stateQueue;
+	const que: sortActionT[] = [];
+	mergeSort_(arr, l, r, que);
+	// mergeSortHelper(que, r);
+
+	return que;
 }
 
 export default mergeSort;

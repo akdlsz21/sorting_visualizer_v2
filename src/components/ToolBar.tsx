@@ -71,7 +71,7 @@ const ToolBar = () => {
 			<input
 				type="range"
 				min="10"
-				max="3000"
+				max="500"
 				step="20"
 				onChange={(e) => handleSpeedRange(e)}
 			/>
