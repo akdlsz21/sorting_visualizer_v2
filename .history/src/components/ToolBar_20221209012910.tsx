@@ -32,6 +32,7 @@ const ToolBar = () => {
 	useEffect(() => {
 		const speed = localStorage.getItem('sortSpeed');
 		const length = localStorage.getItem('arrayLength');
+		console.log('🚀 ~ file: ToolBar.tsx:35 ~ useEffect ~ length', length);
 		if (speed) {
 			setSortSpeed(Number(speed));
 		}
@@ -111,7 +112,9 @@ const ToolBar = () => {
 					max="80"
 					step="1"
 					value={arrayLength}
-					onChange={handleChangeLength}
+					onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+						setArrayLength(Number(e.target.value));
+					}}
 				/>
 				<h3># of Items</h3>
 			</StyledSliderContainer>

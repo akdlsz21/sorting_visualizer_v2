@@ -32,6 +32,7 @@ const ToolBar = () => {
 	useEffect(() => {
 		const speed = localStorage.getItem('sortSpeed');
 		const length = localStorage.getItem('arrayLength');
+		console.log('🚀 ~ file: ToolBar.tsx:35 ~ useEffect ~ length', length);
 		if (speed) {
 			setSortSpeed(Number(speed));
 		}
@@ -87,6 +88,10 @@ const ToolBar = () => {
 
 	const handleChangeLength = (e: React.ChangeEvent<HTMLInputElement>) => {
 		const length = Number(e.target.value);
+		console.log(
+			'🚀 ~ file: ToolBar.tsx:91 ~ handleChangeLength ~ length',
+			length
+		);
 		localStorage.setItem('arrayLength', length.toString());
 		setArrayLength(length);
 	};
