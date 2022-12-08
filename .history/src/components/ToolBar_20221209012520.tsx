@@ -114,6 +114,7 @@ const ToolBar = () => {
 					onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
 						setArrayLength(Number(e.target.value));
 					}}
+					onChange={handleChangeLength}
 				/>
 				<h3># of Items</h3>
 			</StyledSliderContainer>

@@ -29,17 +29,6 @@ const ToolBar = () => {
 		handleResetArray(arrayLength);
 	}, [arrayLength]);
 
-	useEffect(() => {
-		const speed = localStorage.getItem('sortSpeed');
-		const length = localStorage.getItem('arrayLength');
-		if (speed) {
-			setSortSpeed(Number(speed));
-		}
-		if (length) {
-			setArrayLength(Number(length));
-		}
-	}, []);
-
 	const handleResetArray = (len: number) => dispatch(reset(len));
 
 	const handleBubbleSort = () => {
@@ -80,54 +69,33 @@ const ToolBar = () => {
 	};
 
 	function handleSpeedRange(e: React.ChangeEvent<HTMLInputElement>) {
-		const speed = Number(e.target.value);
-		localStorage.setItem('sortSpeed', speed.toString());
-		setSortSpeed(speed);
+		setSortSpeed(Number(e.target.value));
 	}
-
-	const handleChangeLength = (e: React.ChangeEvent<HTMLInputElement>) => {
-		const length = Number(e.target.value);
-		localStorage.setItem('arrayLength', length.toString());
-		setArrayLength(length);
-	};
 
 	return (
 		<StyledToolBar>
-			<StyledSliderContainer>
-				<input
-					type="range"
-					min="10"
-					max="150"
-					step="20"
-					value={sortSpeed}
-					onChange={(e) => handleSpeedRange(e)}
-				/>
-				<h3>Speed of sort</h3>
-			</StyledSliderContainer>
-			<StyledSliderContainer>
-				<input
-					type="range"
-					min="10"
-					max="80"
-					step="1"
-					value={arrayLength}
-					onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-						setArrayLength(Number(e.target.value));
-					}}
-				/>
-				<h3># of Items</h3>
-			</StyledSliderContainer>
-
-			{/* <StyledButton onClick={() => handleResetArray(arrayLength)}>
-				Reset
-			</StyledButton> */}
-			<StyledButton
-				onClick={() => {
-					// make the window refresh
-					window.location.reload();
+			<input
+				type="range"
+				min="10"
+				max="150"
+				step="20"
+				value={sortSpeed}
+				onChange={(e) => handleSpeedRange(e)}
+			/>
+			<input
+				type="range"
+				min="10"
+				max="80"
+				step="1"
+				value={arrayLength}
+				// onChange={(e) => setArrayLength(+e)}
+				onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+					setArrayLength(Number(e.target.value));
 				}}
-			>
-				Reset
+			/>
+
+			<StyledButton onClick={() => handleResetArray(arrayLength)}>
+				Reset Array
 			</StyledButton>
 			<StyledButton onClick={() => handleBubbleSort()}>
 				Bubble Sort
@@ -140,10 +108,7 @@ const ToolBar = () => {
 };
 
 const StyledSliderContainer = styled.div`
-	display: flex;
-	flex-direction: column;
-	align-items: center;
-	justify-content: flex-end;
+	margin-right: 30px;
 `;
 
 const StyledToolBar = styled.div`
@@ -154,7 +119,6 @@ const StyledToolBar = styled.div`
 	flex-direction: row;
 	align-items: center;
 	justify-content: center;
-	gap: 8px;
 `;
 
 const StyledButton = styled.button`

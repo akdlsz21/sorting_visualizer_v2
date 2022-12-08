@@ -29,17 +29,6 @@ const ToolBar = () => {
 		handleResetArray(arrayLength);
 	}, [arrayLength]);
 
-	useEffect(() => {
-		const speed = localStorage.getItem('sortSpeed');
-		const length = localStorage.getItem('arrayLength');
-		if (speed) {
-			setSortSpeed(Number(speed));
-		}
-		if (length) {
-			setArrayLength(Number(length));
-		}
-	}, []);
-
 	const handleResetArray = (len: number) => dispatch(reset(len));
 
 	const handleBubbleSort = () => {
@@ -80,16 +69,8 @@ const ToolBar = () => {
 	};
 
 	function handleSpeedRange(e: React.ChangeEvent<HTMLInputElement>) {
-		const speed = Number(e.target.value);
-		localStorage.setItem('sortSpeed', speed.toString());
-		setSortSpeed(speed);
+		setSortSpeed(Number(e.target.value));
 	}
-
-	const handleChangeLength = (e: React.ChangeEvent<HTMLInputElement>) => {
-		const length = Number(e.target.value);
-		localStorage.setItem('arrayLength', length.toString());
-		setArrayLength(length);
-	};
 
 	return (
 		<StyledToolBar>
@@ -118,16 +99,8 @@ const ToolBar = () => {
 				<h3># of Items</h3>
 			</StyledSliderContainer>
 
-			{/* <StyledButton onClick={() => handleResetArray(arrayLength)}>
-				Reset
-			</StyledButton> */}
-			<StyledButton
-				onClick={() => {
-					// make the window refresh
-					window.location.reload();
-				}}
-			>
-				Reset
+			<StyledButton onClick={() => handleResetArray(arrayLength)}>
+				Reset Array
 			</StyledButton>
 			<StyledButton onClick={() => handleBubbleSort()}>
 				Bubble Sort
@@ -143,7 +116,7 @@ const StyledSliderContainer = styled.div`
 	display: flex;
 	flex-direction: column;
 	align-items: center;
-	justify-content: flex-end;
+	justify-content: center;
 `;
 
 const StyledToolBar = styled.div`
@@ -154,7 +127,6 @@ const StyledToolBar = styled.div`
 	flex-direction: row;
 	align-items: center;
 	justify-content: center;
-	gap: 8px;
 `;
 
 const StyledButton = styled.button`

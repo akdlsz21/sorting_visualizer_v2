@@ -29,17 +29,6 @@ const ToolBar = () => {
 		handleResetArray(arrayLength);
 	}, [arrayLength]);
 
-	useEffect(() => {
-		const speed = localStorage.getItem('sortSpeed');
-		const length = localStorage.getItem('arrayLength');
-		if (speed) {
-			setSortSpeed(Number(speed));
-		}
-		if (length) {
-			setArrayLength(Number(length));
-		}
-	}, []);
-
 	const handleResetArray = (len: number) => dispatch(reset(len));
 
 	const handleBubbleSort = () => {
@@ -84,12 +73,6 @@ const ToolBar = () => {
 		localStorage.setItem('sortSpeed', speed.toString());
 		setSortSpeed(speed);
 	}
-
-	const handleChangeLength = (e: React.ChangeEvent<HTMLInputElement>) => {
-		const length = Number(e.target.value);
-		localStorage.setItem('arrayLength', length.toString());
-		setArrayLength(length);
-	};
 
 	return (
 		<StyledToolBar>
