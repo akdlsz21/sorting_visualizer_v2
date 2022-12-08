@@ -25,10 +25,6 @@ const ToolBar = () => {
 	// useDispatch for dispatching reducer functions??
 	const dispatch = useDispatch();
 	useEffect(() => {
-		console.log(
-			'🚀 ~ file: ToolBar.tsx:30 ~ useEffect ~ arrayLength',
-			arrayLength
-		);
 		handleResetArray(arrayLength);
 	}, [arrayLength]);
 	// grabbing the state, later will be dispatched
@@ -78,6 +74,7 @@ const ToolBar = () => {
 	};
 
 	function handleSpeedRange(e: React.ChangeEvent<HTMLInputElement>) {
+		console.log(`sort speed: ${e.target.value}`);
 		setSortSpeed(Number(e.target.value));
 	}
 
@@ -94,17 +91,13 @@ const ToolBar = () => {
 			<input
 				type="range"
 				min="10"
-				max="80"
+				max="20"
 				step="1"
 				value={arrayLength}
-				// onChange={(e) => setArrayLength(+e)}
-				onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-					console.log(e.target.value);
-					setArrayLength(Number(e.target.value));
-				}}
+				onChange={(e) => setArrayLength(+e)}
 			/>
 
-			<StyledButton onClick={() => handleResetArray(arrayLength)}>
+			<StyledButton onClick={() => handleResetArray(20)}>
 				Reset Array
 			</StyledButton>
 			<StyledButton onClick={() => handleBubbleSort()}>

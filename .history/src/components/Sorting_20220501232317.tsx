@@ -79,3 +79,9 @@ const ArrayContainer = styled.div`
 	align-items: flex-end;
 	transition: 250ms ease-in-out;
 `;
+
+// const ArrayBar = styled.div`
+// 	/* background-color: pink; */
+// 	width: 20px;
+// 	border: 1px solid purple;
+// `;

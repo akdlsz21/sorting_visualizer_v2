@@ -24,7 +24,7 @@ const compare = { color: 'blue' };
 const defaultState = { color: WHITE };
 
 // @@INIT
-const initialState: visualArrayT = setArrayLength(20);
+const initialState: visualArrayT = setArrayLength(200);
 
 // Async thunk for setTimeout;
 

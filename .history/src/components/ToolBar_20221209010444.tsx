@@ -20,7 +20,7 @@ interface timeoutId {
 
 const ToolBar = () => {
 	const [sortSpeed, setSortSpeed] = useState<number>(50);
-	const [arrayLength, setArrayLength] = useState<number>(20);
+	const [arrayLength, setArrayLength] = useState<number>(1);
 	const [timeoutIds, setTimeoutIds] = useState<timeoutId[]>([]);
 	// useDispatch for dispatching reducer functions??
 	const dispatch = useDispatch();

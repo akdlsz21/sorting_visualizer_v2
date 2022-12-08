@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import setArrayLength from '../../components/sorting_logic/resetArray';
+import resetArray from '../../components/sorting_logic/resetArray';
 import bubbleSort from '../../components/sorting_logic/bubbleSort';
 
 export type visualArrayT = visualBarT[];
@@ -24,7 +24,7 @@ const compare = { color: 'blue' };
 const defaultState = { color: WHITE };
 
 // @@INIT
-const initialState: visualArrayT = setArrayLength(20);
+const initialState: visualArrayT = resetArray(200);
 
 // Async thunk for setTimeout;
 
@@ -69,15 +69,15 @@ export const visualArraySlice = createSlice({
 			return action.payload;
 		},
 		initialArrayReducer: () => {
-			const initialVisualArray = setArrayLength(20);
+			const initialVisualArray = resetArray(20);
 			return initialVisualArray;
 		},
 		reset: (state, action: PayloadAction<number>) => {
-			const resettedVisualArray = setArrayLength(action.payload);
+			const resettedVisualArray = resetArray(action.payload);
 			return resettedVisualArray;
 		},
 		setLengthToFive: () => {
-			const resettedVisualArray = setArrayLength(5);
+			const resettedVisualArray = resetArray(5);
 			return resettedVisualArray;
 		},
 	},

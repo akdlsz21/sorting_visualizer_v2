@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import setArrayLength from '../../components/sorting_logic/resetArray';
+import resetArray from '../../components/sorting_logic/resetArray';
 import bubbleSort from '../../components/sorting_logic/bubbleSort';
 
 export type visualArrayT = visualBarT[];
@@ -18,13 +18,13 @@ export type sortActionT = {
 	swapWithOneHigherIdx?: number;
 };
 export const WHITE = 'white';
-const selected = { color: '#B0E817' };
+const selected = { color: 'green' };
 const swapped = { color: 'crimson' };
 const compare = { color: 'blue' };
 const defaultState = { color: WHITE };
 
 // @@INIT
-const initialState: visualArrayT = setArrayLength(20);
+const initialState: visualArrayT = resetArray(200);
 
 // Async thunk for setTimeout;
 
@@ -35,18 +35,15 @@ export const visualArraySlice = createSlice({
 		bubCompareReducer: (state, action: PayloadAction<sortActionT>) => {
 			const { selectedIdx, compareIdx, defaultIdx, swapIdx } =
 				action.payload;
-			// if (!isNaN(selectedIdx!)) {
-			// 	state[selectedIdx!].state = selected;
-			// }
-			if (+selectedIdx! >= 0) {
+			if (!isNaN(selectedIdx!)) {
 				state[selectedIdx!].state = selected;
 			}
 
-			if (+compareIdx! >= 0) {
+			if (!isNaN(compareIdx!)) {
 				state[compareIdx!].state = compare;
 			}
 
-			if (+swapIdx! >= 0) {
+			if (!isNaN(swapIdx!)) {
 				let temp = { ...state[selectedIdx!] };
 				state[selectedIdx!] = state[swapIdx!];
 				state[selectedIdx!].state = swapped;
@@ -57,7 +54,10 @@ export const visualArraySlice = createSlice({
 				state[defaultIdx!].state = defaultState;
 			}
 
-			console.log('@@@', action.payload);
+			console.log(
+				'🚀 ~ file: visualArraySlice.ts:60 ~ action.payload',
+				action.payload
+			);
 		},
 		bubCompareAndSelectReducer: (
 			state,
@@ -69,15 +69,15 @@ export const visualArraySlice = createSlice({
 			return action.payload;
 		},
 		initialArrayReducer: () => {
-			const initialVisualArray = setArrayLength(20);
+			const initialVisualArray = resetArray(20);
 			return initialVisualArray;
 		},
-		reset: (state, action: PayloadAction<number>) => {
-			const resettedVisualArray = setArrayLength(action.payload);
+		reset: () => {
+			const resettedVisualArray = resetArray(40);
 			return resettedVisualArray;
 		},
 		setLengthToFive: () => {
-			const resettedVisualArray = setArrayLength(5);
+			const resettedVisualArray = resetArray(5);
 			return resettedVisualArray;
 		},
 	},

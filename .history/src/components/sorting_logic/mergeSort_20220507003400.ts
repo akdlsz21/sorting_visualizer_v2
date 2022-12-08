@@ -51,8 +51,6 @@ function merge(
 				que.push(operation);
 				operation = { selectedIdx: index - 1 };
 				que.push(operation);
-				operation = { selectedIdx: index };
-				que.push(operation);
 				index--;
 			}
 			arr[start] = value;

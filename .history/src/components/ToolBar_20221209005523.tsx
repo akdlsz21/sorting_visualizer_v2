@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
 import {
@@ -24,13 +24,7 @@ const ToolBar = () => {
 	const [timeoutIds, setTimeoutIds] = useState<timeoutId[]>([]);
 	// useDispatch for dispatching reducer functions??
 	const dispatch = useDispatch();
-	useEffect(() => {
-		console.log(
-			'🚀 ~ file: ToolBar.tsx:30 ~ useEffect ~ arrayLength',
-			arrayLength
-		);
-		handleResetArray(arrayLength);
-	}, [arrayLength]);
+
 	// grabbing the state, later will be dispatched
 	const visualArray = useSelector((state: RootState) => state.visualArray);
 
@@ -78,6 +72,7 @@ const ToolBar = () => {
 	};
 
 	function handleSpeedRange(e: React.ChangeEvent<HTMLInputElement>) {
+		console.log(`sort speed: ${e.target.value}`);
 		setSortSpeed(Number(e.target.value));
 	}
 
@@ -94,17 +89,13 @@ const ToolBar = () => {
 			<input
 				type="range"
 				min="10"
-				max="80"
-				step="1"
+				max="1000"
+				step="5"
 				value={arrayLength}
-				// onChange={(e) => setArrayLength(+e)}
-				onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-					console.log(e.target.value);
-					setArrayLength(Number(e.target.value));
-				}}
+				onChange={(e) => setArrayLength(+e)}
 			/>
 
-			<StyledButton onClick={() => handleResetArray(arrayLength)}>
+			<StyledButton onClick={() => handleResetArray(20)}>
 				Reset Array
 			</StyledButton>
 			<StyledButton onClick={() => handleBubbleSort()}>

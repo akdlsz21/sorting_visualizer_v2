@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
 import {
@@ -20,17 +20,10 @@ interface timeoutId {
 
 const ToolBar = () => {
 	const [sortSpeed, setSortSpeed] = useState<number>(50);
-	const [arrayLength, setArrayLength] = useState<number>(20);
 	const [timeoutIds, setTimeoutIds] = useState<timeoutId[]>([]);
 	// useDispatch for dispatching reducer functions??
 	const dispatch = useDispatch();
-	useEffect(() => {
-		console.log(
-			'🚀 ~ file: ToolBar.tsx:30 ~ useEffect ~ arrayLength',
-			arrayLength
-		);
-		handleResetArray(arrayLength);
-	}, [arrayLength]);
+
 	// grabbing the state, later will be dispatched
 	const visualArray = useSelector((state: RootState) => state.visualArray);
 
@@ -64,20 +57,23 @@ const ToolBar = () => {
 		}
 	};
 
+	const handleSortAbort = () => {};
+
 	const handleQuickSort = () => {
 		// quickSort has the address of the global state visual Array.
 		// copy the array of the global array address and pass it as an argument instead
-		// const stateQueue = quickSort([...visualArray], 0, visualArray.length - 1);
-		// let timer = sortSpeed;
-		// stateQueue.forEach((arr) => {
-		// 	setTimeout(() => {
-		// 		dispatch(setVisualArrayReducer(arr));
-		// 	}, timer);
-		// 	timer += sortSpeed;
-		// });
+		const stateQueue = quickSort([...visualArray], 0, visualArray.length - 1);
+		let timer = sortSpeed;
+		stateQueue.forEach((arr) => {
+			setTimeout(() => {
+				dispatch(setVisualArrayReducer(arr));
+			}, timer);
+			timer += sortSpeed;
+		});
 	};
 
 	function handleSpeedRange(e: React.ChangeEvent<HTMLInputElement>) {
+		console.log(`sort speed: ${e.target.value}`);
 		setSortSpeed(Number(e.target.value));
 	}
 
@@ -91,21 +87,11 @@ const ToolBar = () => {
 				value={sortSpeed}
 				onChange={(e) => handleSpeedRange(e)}
 			/>
-			<input
-				type="range"
-				min="10"
-				max="80"
-				step="1"
-				value={arrayLength}
-				// onChange={(e) => setArrayLength(+e)}
-				onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-					console.log(e.target.value);
-					setArrayLength(Number(e.target.value));
-				}}
-			/>
-
-			<StyledButton onClick={() => handleResetArray(arrayLength)}>
+			<StyledButton onClick={() => handleResetArray(20)}>
 				Reset Array
+			</StyledButton>
+			<StyledButton onClick={() => handleResetArray(3)}>
+				setLengthToFive
 			</StyledButton>
 			<StyledButton onClick={() => handleBubbleSort()}>
 				Bubble Sort
@@ -116,6 +102,7 @@ const ToolBar = () => {
 			<StyledButton onClick={() => handleQuickSort()}>
 				Quick Sort
 			</StyledButton>
+			<StyledButton onClick={handleSortAbort}>Stop</StyledButton>
 		</StyledToolBar>
 	);
 };

@@ -20,7 +20,7 @@ interface timeoutId {
 
 const ToolBar = () => {
 	const [sortSpeed, setSortSpeed] = useState<number>(50);
-	const [arrayLength, setArrayLength] = useState<number>(20);
+	const [arrayLength, setArrayLength] = useState<number>(1);
 	const [timeoutIds, setTimeoutIds] = useState<timeoutId[]>([]);
 	// useDispatch for dispatching reducer functions??
 	const dispatch = useDispatch();
@@ -93,14 +93,14 @@ const ToolBar = () => {
 			/>
 			<input
 				type="range"
-				min="10"
-				max="80"
+				min="1"
+				max="20"
 				step="1"
 				value={arrayLength}
 				// onChange={(e) => setArrayLength(+e)}
-				onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-					console.log(e.target.value);
-					setArrayLength(Number(e.target.value));
+				onChange={(e) => {
+					console.log(e);
+					setArrayLength(Number(e));
 				}}
 			/>
 
